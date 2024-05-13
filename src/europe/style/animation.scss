@@ -1,0 +1,312 @@
+.TheAbsoluteVoid {
+    animation: timer-hide 0.75s forwards;
+}
+
+.TheVoid {
+    opacity: 0;
+}
+
+.AnimationFadeOut {
+    animation: timer-hide 2s forwards;
+}
+
+.AnimationBanRed {
+    animation: timer-ban-red 4s forwards;
+}
+.AnimationBanBlue {
+    animation: timer-ban-blue 4s forwards;
+}
+
+.AnimationFadeIn {
+    animation: timer-show 2s forwards;
+}
+
+.AnimationFastFadeOut {
+    animation: timer-hide 0.75s forwards;
+}
+
+.AnimationFastFadeIn {
+    animation: timer-show 0.35s forwards;
+}
+.AnimationPlayerInfo {
+    animation: timer-show-player-info 7s forwards;
+}
+
+.AnimationFastFadeOutRed {
+    animation: timer-hide-red 2.75s forwards;
+}
+
+.AnimationFastFadeOutBlue {
+    animation: timer-hide-blue 2.75s forwards;
+}
+
+.AnimationHidden {
+    .Timer {
+        position: relative;
+        /* bottom: -130px; */
+        bottom: -300px;
+        animation: timer 0.75s forwards;
+
+        .Blue,
+        .Red {
+            opacity: 0;
+        }
+    }
+
+    .Team {
+        opacity: 0;
+    }
+
+    .Logo,
+    .Patch {
+        opacity: 0;
+    }
+}
+
+@keyframes timer {
+    100% {
+        bottom: 0;
+    }
+}
+
+.AnimationTimer {
+    .Timer {
+        .Blue {
+            left: 100% !important;
+            transition: none !important;
+            animation: timer-colors 0.5s forwards;
+            animation-timing-function: ease-in;
+        }
+
+        .Red {
+            left: -100% !important;
+            transition: none !important;
+            animation: timer-colors 0.5s forwards;
+            animation-timing-function: ease-in;
+        }
+    }
+
+    .Team {
+        &.TeamBlue {
+            .Bans {
+                transform: translateX(100%);
+                animation: bans-fadein 1s forwards;
+                animation-delay: 0.5s;
+            }
+        }
+
+        &.TeamRed {
+            .Bans {
+                transform: translateX(-100%);
+                animation: bans-fadein 1s forwards;
+                animation-delay: 0.5s;
+            }
+        }
+    }
+}
+
+@keyframes timer-show-player-info {
+    0% {
+        opacity: 0;
+    }
+    20% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+@keyframes timer-hide {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+@keyframes timer-ban-blue {
+    0% {
+        opacity: 1;
+        filter: saturate(100%);
+        transform: translate(-50%, 20%);
+    }
+    25% {
+        filter: saturate(0%);
+    }
+    50% {
+        opacity: 1;
+        transform: translate(-50%, 20%);
+    }
+    100% {
+        opacity: 0;
+        filter: saturate(0%);
+        transform: translate(-200%, 20%);
+    }
+}
+@keyframes timer-ban-red {
+    0% {
+        opacity: 1;
+        filter: saturate(100%);
+        transform: translate(-50%, 20%);
+    }
+    25% {
+        filter: saturate(0%);
+    }
+    50% {
+        opacity: 1;
+        transform: translate(-50%, 20%);
+    }
+    100% {
+        opacity: 0;
+        filter: saturate(0%);
+        transform: translate(150%, 20%);
+    }
+}
+
+@keyframes timer-hide-red {
+    0% {
+        opacity: 1;
+        filter: brightness(6);
+    }
+    30% {
+        opacity: 1;
+        filter: brightness(1);
+    }
+    50% {
+        opacity: 1;
+        transform: translate(-50%, 20%);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(150%, 20%);
+    }
+}
+
+@keyframes timer-hide-blue {
+    0% {
+        opacity: 1;
+        filter: brightness(6);
+    }
+    30% {
+        opacity: 1;
+        filter: brightness(1);
+    }
+    50% {
+        opacity: 1;
+        transform: translate(-50%, 20%);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-200%, 20%);
+    }
+}
+
+@keyframes timer-show {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes timer-colors {
+    100% {
+        left: 0;
+    }
+}
+
+@keyframes bans-fadein {
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.AnimationBansPick {
+    --animation-initial-delay: 0.4s;
+    --animation-progress: 0.1745s;
+
+    .Pick {
+        animation: pick-move-up 0.7s forwards;
+        top: 100%;
+    }
+
+    .TeamBlue .Pick {
+        &:nth-child(1) {
+            animation-delay: calc(var(--animation-initial-delay) + calc(var(--animation-progress) * 1));
+        }
+
+        &:nth-child(2) {
+            animation-delay: calc(var(--animation-initial-delay) + calc(var(--animation-progress) * 2));
+        }
+
+        &:nth-child(3) {
+            animation-delay: calc(var(--animation-initial-delay) + calc(var(--animation-progress) * 3));
+        }
+
+        &:nth-child(4) {
+            animation-delay: calc(var(--animation-initial-delay) + calc(var(--animation-progress) * 4));
+        }
+
+        &:nth-child(5) {
+            animation-delay: calc(var(--animation-initial-delay) + calc(var(--animation-progress) * 5));
+        }
+    }
+
+    .TeamRed .Pick {
+        &:nth-child(1) {
+            animation-delay: calc(var(--animation-initial-delay) + calc(var(--animation-progress) * 1));
+        }
+
+        &:nth-child(2) {
+            animation-delay: calc(var(--animation-initial-delay) + calc(var(--animation-progress) * 2));
+        }
+
+        &:nth-child(3) {
+            animation-delay: calc(var(--animation-initial-delay) + calc(var(--animation-progress) * 3));
+        }
+
+        &:nth-child(4) {
+            animation-delay: calc(var(--animation-initial-delay) + calc(var(--animation-progress) * 4));
+        }
+
+        &:nth-child(5) {
+            animation-delay: calc(var(--animation-initial-delay) + calc(var(--animation-progress) * 5));
+        }
+    }
+
+    .Logo,
+    .Patch {
+        position: relative;
+        top: 100%;
+        z-index: -20;
+        animation: pick-move-up 0.7s forwards;
+    }
+}
+
+.AnimationBansPickOnly {
+    .Timer {
+        .Blue {
+            left: 0 !important;
+        }
+
+        .Red {
+            left: 0 !important;
+        }
+    }
+}
+
+@keyframes pick-move-up {
+    100% {
+        top: 0;
+    }
+}
+
+.AnimationPigs {
+    // EPIC gamer moment
+}

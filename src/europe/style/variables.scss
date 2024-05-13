@@ -1,0 +1,26 @@
+:root {
+  --box-width: 500px;
+  --box-height: calc(var(--box-pick-height) + var(--box-ban-height));
+  --box-logo-height: calc(100% - calc(var(--box-ban-height) + var(--box-patch-height)));
+  --box-timer-height: var(--box-ban-height);
+  --box-patch-height: 40px;
+
+  --box-team-top: 10px;
+  --box-pick-height: 150px;
+  --box-ban-height: 60px;
+  --box-ban-spacer: calc(var(--box-ban-height) / 3);
+
+  --pick-name-height: 30px;
+  --pick-image-crop: 0px;
+
+  --ban-image-crop: 0px;
+  --summoner-spell-size: 50px;
+
+  --champselect-margin-bot: 50px;
+
+  --color-red: rgb(222,40,70);
+  --color-blue: rgb(0,151,196);
+
+  --border-between-color: darkgray;
+  --border-width: 3px;
+}
