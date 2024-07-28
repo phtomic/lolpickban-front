@@ -50,8 +50,7 @@ export default class Overlay extends React.Component {
             teamName: "",
             lane: ""
         },
-        pickPlayer: React.createRef(new Audio()),
-        banPlayer: React.createRef(new Audio())
+        audio: this.props.audio
     };
     playOpeningAnimation() {
         this.setState({ ...this.state, openingAnimationPlayed: true, playersInfo: playersInfoDefault });
@@ -92,7 +91,6 @@ export default class Overlay extends React.Component {
                 await sleep(1000);
                 let teamInfo = teams.find((teamT) => teamT.team === team.name)
                 let playerName = teamInfo.players[indexStage]
-                console.log(`http://${uri}/players/${convertToSlug(playerName)}.png`)
                 this.setState({
                     ...this.state,
                     currentPlayerInfoAnimation: css.AnimationPlayerInfo,
@@ -121,6 +119,7 @@ export default class Overlay extends React.Component {
         let lastPick = tmpState.lastPick
         let lastSelection = data[lastPick.blueTeam ? 'blueTeam' : 'redTeam'][lastPick.isBan ? 'bans' : 'picks'][lastPick.key]
         let picksAtivos = false
+        const playAudio = (ban=false) => ban?this.props.playBan({forceSoundEnabled:true}):this.props.playPick({forceSoundEnabled:true})
         function changeState(changes) {
             updateState = true
             tmpState = { ...tmpState, ...changes }
@@ -148,7 +147,6 @@ export default class Overlay extends React.Component {
                         changeState({ selectedChampion })
                 }
                 if (lastPick.key !== key || lastPick.blueTeam !== blueTeam || lastPick.isBan !== isBan) {
-                    console.log(lastPick, lastSelection)
                     changeState({
                         selectedChampion: false,
                         lastPick: {
@@ -161,7 +159,8 @@ export default class Overlay extends React.Component {
                             timeout: Date.now() + 4000
                         },
                         banAnimation: css.AnimationBan
-                    })
+                    });
+                    playAudio(lastPick.isBan)
                 }
             }
 
@@ -187,7 +186,8 @@ export default class Overlay extends React.Component {
                     timeout: Date.now() + 4000
                 },
                 banAnimation: css.AnimationBan
-            })
+            });
+            playAudio(lastPick.isBan)
         }
         if (updateState) self.setState(tmpState)
     }

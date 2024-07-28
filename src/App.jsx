@@ -3,9 +3,23 @@ import Overlay from "./europe/Overlay";
 import convertState from './convertState';
 import Error from './Error';
 import teams from './teams';
-
+import useSound from 'use-sound';
+import mypicksound from './assets/pick.mp3'
+import mybansound from './assets/ban.mp3'
 function App() {
     const [globalState, setGlobalState] = useState({});
+    const [playPick] = useSound(mypicksound,{
+        interrupt:true,
+        volume:1,
+        playbackRate:1,
+        soundEnabled:true
+    })
+    const [playBan] = useSound(mybansound,{
+        interrupt:true,
+        volume:1,
+        playbackRate:1,
+        soundEnabled:true
+    })
     const [config, setConfig] = useState({
         frontend: {
             scoreEnabled: false,
@@ -76,11 +90,10 @@ function App() {
     if (error) {
         return <Error message={error} />
     }
-
     if (config) {
         return (
             <div className="App">
-                <Overlay state={convertState(globalState, Window.PB.backend)} config={config}/>
+                <Overlay state={convertState(globalState, Window.PB.backend)} config={config} playPick={playPick} playBan={playBan}/>
             </div>
         );
     } else {
