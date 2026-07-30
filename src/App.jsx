@@ -6,6 +6,7 @@ import teams from './teams';
 import useSound from 'use-sound';
 import mypicksound from './assets/pick.mp3'
 import mybansound from './assets/ban.mp3'
+
 function App() {
     const [globalState, setGlobalState] = useState({});
     const [playPick] = useSound(mypicksound,{
@@ -67,8 +68,6 @@ function App() {
             })
             setConfig(state.state.config);
         });
-
-        
 
         try {
             Window.PB.start();

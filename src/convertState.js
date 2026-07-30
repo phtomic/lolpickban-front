@@ -77,11 +77,15 @@ const putPlaceholders = (team,  backendUrl) => {
 };
 
 const convertState = (state, backendUrl) => {
-  if (Object.keys(state).length !== 0) {
-    putPlaceholders(state.blueTeam, backendUrl);
-    putPlaceholders(state.redTeam, backendUrl);
-  }
-  return state;
+  if (!state || Object.keys(state).length === 0) return state;
+
+  // Deep clone state to prevent mutating globalState in-place
+  const stateCopy = JSON.parse(JSON.stringify(state));
+
+  putPlaceholders(stateCopy.blueTeam, backendUrl);
+  putPlaceholders(stateCopy.redTeam, backendUrl);
+
+  return stateCopy;
 }
 
 export default convertState;

@@ -239,15 +239,23 @@ export default class Overlay extends React.Component {
         );
         let fadeoutType = (this.state.lastChampion.blueTeam) ? css.AnimationFastFadeOutBlue : css.AnimationFastFadeOutRed
         let banType = (this.state.lastChampion.blueTeam) ? css.AnimationBanBlue : css.AnimationBanRed
+        const isBlueActive = state.blueTeam?.isActive;
+        const activeGlowColor = isBlueActive ? 'rgba(0, 151, 196, 0.4)' : 'rgba(222, 40, 70, 0.4)';
+        const activeBorderColor = isBlueActive ? 'rgba(0, 200, 255, 0.3)' : 'rgba(255, 60, 90, 0.3)';
         let pickBanImageStyle = {
             height: 700,
             width: 400,
             minWidth: 100,
             margin: 'auto',
             objectFit: 'cover',
-            borderRadius: '10px 40px 10px 40px', position: 'absolute', transform: 'translate(-50%, 20%)',
+            borderRadius: '12px 40px 12px 40px',
+            position: 'absolute',
+            transform: 'translate(-50%, 20%)',
             top: '50%',
             left: '50%',
+            boxShadow: `0 0 50px ${activeGlowColor}, 0 0 100px rgba(0, 0, 0, 0.5), 0 8px 32px rgba(0, 0, 0, 0.6)`,
+            border: `2px solid ${activeBorderColor}`,
+            transition: 'box-shadow 0.5s ease, border-color 0.5s ease',
         }
         return (<>
             <div className={cx(css.Europe, this.state.currentAnimationState)} style={{ "--color-red": config.frontend.redTeam.color, "--color-blue": config.frontend.blueTeam.color, position: 'relative' }}>
@@ -296,22 +304,96 @@ export default class Overlay extends React.Component {
                 left: '50%',
                 transform: 'translate(-50%, -50%)'
             }}>
-                <div style={{ display: 'inline', position: 'absolute', width: 400, top: 530, padding: 3, alignContent: 'center', backgroundColor: 'black' }}>
-                    <h1 style={{ color: 'white', textAlign: 'center' }}>{this.state.currentPlayerInfo.champion?.name?.trim()}</h1>
+                <div style={{
+                    display: 'inline',
+                    position: 'absolute',
+                    width: 400,
+                    top: 530,
+                    padding: '8px 16px',
+                    alignContent: 'center',
+                    background: 'linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(20, 25, 40, 0.9) 100%)',
+                    backdropFilter: 'blur(10px)',
+                    borderBottom: '2px solid rgba(255, 255, 255, 0.1)',
+                    borderRadius: '0 0 12px 0'
+                }}>
+                    <h1 style={{
+                        color: 'white',
+                        textAlign: 'center',
+                        fontFamily: "'Saira Condensed', sans-serif",
+                        fontWeight: 700,
+                        letterSpacing: '2px',
+                        textTransform: 'uppercase',
+                        textShadow: '0 0 20px rgba(255, 255, 255, 0.2)',
+                        margin: 0
+                    }}>{this.state.currentPlayerInfo.champion?.name?.trim()}</h1>
                 </div>
-                <img src={this.state.currentPlayerInfo.champion?.splashCenteredImg} style={{ height: 700, width: 400, minWidth: 100, margin: 'auto', objectFit: 'cover', borderRadius: '10px 80px 10px 80px' }} />
+                <img src={this.state.currentPlayerInfo.champion?.splashCenteredImg} style={{
+                    height: 700,
+                    width: 400,
+                    minWidth: 100,
+                    margin: 'auto',
+                    objectFit: 'cover',
+                    borderRadius: '10px 80px 10px 80px',
+                    boxShadow: '0 0 60px rgba(0, 0, 0, 0.5)',
+                    border: '1px solid rgba(255, 255, 255, 0.08)'
+                }} />
                 <div style={{ marginTop: -65, marginLeft: 250 }}>
 
-                    <img src={this.state.currentPlayerInfo.spell1} style={{ width: 60, height: 'auto' }} />
-                    <img src={this.state.currentPlayerInfo.spell2} style={{ width: 60, height: 'auto' }} />
+                    <img src={this.state.currentPlayerInfo.spell1} style={{
+                        width: 60,
+                        height: 'auto',
+                        borderRadius: 6,
+                        border: '1px solid rgba(255, 255, 255, 0.1)',
+                        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.5)'
+                    }} />
+                    <img src={this.state.currentPlayerInfo.spell2} style={{
+                        width: 60,
+                        height: 'auto',
+                        borderRadius: 6,
+                        border: '1px solid rgba(255, 255, 255, 0.1)',
+                        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.5)'
+                    }} />
                 </div>
-                <div style={{ marginTop: -650, marginLeft: 500, color: 'white', padding: 30, backgroundColor: "rgb(0,0,0)", borderRadius: 20 }}>
-                    <h1>{this.state.currentPlayerInfo.teamName}</h1>
-                    <h2 style={{ display: 'inline' }}>{this.state.currentPlayerInfo.playerName}</h2>
-                    <img style={{ display: 'block', height: 100, width: 'auto', marginTop: -100, marginLeft: 250 }} src={this.state.currentPlayerInfo.lane} />
+                <div style={{
+                    marginTop: -650,
+                    marginLeft: 500,
+                    color: 'white',
+                    padding: 30,
+                    background: 'linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(15, 20, 35, 0.85) 100%)',
+                    backdropFilter: 'blur(15px)',
+                    borderRadius: 16,
+                    border: '1px solid rgba(255, 255, 255, 0.08)',
+                    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)'
+                }}>
+                    <h1 style={{
+                        fontFamily: "'Saira Condensed', sans-serif",
+                        fontWeight: 800,
+                        letterSpacing: '3px',
+                        textShadow: '0 0 20px rgba(255, 255, 255, 0.15)',
+                        margin: '0 0 10px 0'
+                    }}>{this.state.currentPlayerInfo.teamName}</h1>
+                    <h2 style={{
+                        display: 'inline',
+                        fontFamily: "'Saira Condensed', sans-serif",
+                        fontWeight: 600,
+                        letterSpacing: '1px'
+                    }}>{this.state.currentPlayerInfo.playerName}</h2>
+                    <img style={{ display: 'block', height: 100, width: 'auto', marginTop: -100, marginLeft: 250, filter: 'drop-shadow(0 0 10px rgba(255, 255, 255, 0.2))' }} src={this.state.currentPlayerInfo.lane} />
                 </div>
-                <div style={{ marginLeft: 500, color: 'white', padding: 30, borderRadius: 20 }}>
-                    <img style={{ display: 'block', height: 400, width: 'auto' }} src={this.state.currentPlayerInfo.playerImg} />
+                <div style={{
+                    marginLeft: 500,
+                    color: 'white',
+                    padding: 30,
+                    borderRadius: 16
+                }}>
+                    <img style={{
+                        display: 'block',
+                        height: 400,
+                        width: 'auto',
+                        borderRadius: 12,
+                        border: '1px solid rgba(255, 255, 255, 0.08)',
+                        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)'
+                    }} src={this.state.currentPlayerInfo.playerImg} />
                 </div>
             </div>}
         </>
