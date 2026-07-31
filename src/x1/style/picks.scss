@@ -1,0 +1,242 @@
+/* ─── SINGLE LARGE PICK (X1) ─── */
+.Picks {
+  width: 100%;
+  height: calc(var(--box-pick-height) + var(--pick-name-height));
+  display: block;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  .Pick {
+    position: relative;
+    height: calc(var(--box-pick-height) + var(--pick-name-height));
+    overflow: hidden;
+    background: linear-gradient(180deg, rgba(6, 9, 20, 0.9) 0%, rgba(10, 15, 30, 0.85) 100%);
+    backdrop-filter: blur(8px);
+    transition: box-shadow 0.5s ease;
+
+    /* Shimmer sweep */
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.025) 40%,
+        rgba(255, 255, 255, 0.05) 50%,
+        rgba(255, 255, 255, 0.025) 60%,
+        transparent 100%
+      );
+      z-index: 5;
+      animation: x1-pick-shine 10s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    &.Active {
+      .PlayerName {
+        height: calc(2 * var(--pick-name-height)) !important;
+        margin-top: calc(-1 * var(--pick-name-height));
+        line-height: calc(2 * var(--pick-name-height));
+      }
+    }
+
+    .PlayerName {
+      transition:
+        height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+        margin-top 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+        background-color 0.3s ease;
+      height: calc(100% + var(--pick-name-height));
+      color: rgba(255, 255, 255, 0.95);
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.85) 0%, rgba(5, 8, 20, 0.95) 100%);
+      text-align: center;
+      font-size: calc(0.46 * var(--pick-name-height));
+      line-height: var(--pick-name-height);
+      font-family: 'Saira Condensed', sans-serif;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      position: relative;
+      z-index: 3;
+    }
+
+    .SummonerSpells {
+      position: absolute;
+      bottom: calc(var(--pick-name-height) + 6px);
+      right: 8px;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+
+      img {
+        height: var(--summoner-spell-size);
+        width: var(--summoner-spell-size);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 5px;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.7);
+      }
+    }
+
+    .PickImage {
+      position: relative;
+      height: calc(100% - var(--pick-name-height));
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center top;
+        transition: transform 0.5s ease, filter 0.5s ease;
+      }
+
+      /* Bottom vignette */
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 50%;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, transparent 100%);
+        pointer-events: none;
+        z-index: 2;
+      }
+
+      /* Active pulsate overlay */
+      &.Active::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: calc(100% + var(--pick-name-height));
+        opacity: 0.5;
+        animation: x1-pulsate-pick 1.5s infinite;
+        transition: height 1s;
+        z-index: 3;
+      }
+    }
+  }
+}
+
+/* ─── BLUE TEAM PICK ─── */
+&.TeamBlue .Picks .Pick {
+  border-left: 3px solid rgba(0, 151, 196, 0.3);
+  border-top: 1px solid rgba(0, 151, 196, 0.1);
+  box-shadow:
+    inset 0 0 30px rgba(0, 151, 196, 0.1),
+    0 0 40px rgba(0, 0, 0, 0.5);
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(0, 200, 255, 0.8), rgba(0, 151, 196, 0.3), transparent);
+    z-index: 10;
+  }
+
+  &.Active {
+    animation: x1-blue-pick-glow 2s ease-in-out infinite;
+    border-left: 3px solid rgba(0, 200, 255, 0.8);
+
+    .PlayerName {
+      background: linear-gradient(90deg, rgba(0, 130, 180, 0.95), rgba(0, 180, 230, 0.9));
+      color: white;
+      text-shadow: 0 0 14px rgba(255, 255, 255, 0.5);
+    }
+
+    .PlayerName::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      opacity: 0.2;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+      animation: x1-shimmer 2.5s infinite;
+    }
+
+    .PickImage.Active::before {
+      background-image: linear-gradient(to left, var(--color-blue) 0%, rgba(0, 0, 0, 0) 50%, var(--color-blue) 100%);
+    }
+  }
+}
+
+/* ─── RED TEAM PICK ─── */
+&.TeamRed .Picks .Pick {
+  border-right: 3px solid rgba(222, 40, 70, 0.3);
+  border-top: 1px solid rgba(222, 40, 70, 0.1);
+  box-shadow:
+    inset 0 0 30px rgba(222, 40, 70, 0.1),
+    0 0 40px rgba(0, 0, 0, 0.5);
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(270deg, rgba(255, 60, 90, 0.8), rgba(222, 40, 70, 0.3), transparent);
+    z-index: 10;
+  }
+
+  &.Active {
+    animation: x1-red-pick-glow 2s ease-in-out infinite;
+    border-right: 3px solid rgba(255, 60, 90, 0.8);
+
+    .PlayerName {
+      background: linear-gradient(90deg, rgba(200, 30, 60, 0.95), rgba(160, 25, 50, 0.9));
+      color: white;
+      text-shadow: 0 0 14px rgba(255, 255, 255, 0.5);
+    }
+
+    .PlayerName::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      opacity: 0.2;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+      animation: x1-shimmer 2.5s infinite;
+    }
+
+    .PickImage.Active::before {
+      background-image: linear-gradient(to left, var(--color-red) 0%, rgba(0, 0, 0, 0) 50%, var(--color-red) 100%);
+    }
+  }
+}
+
+/* ─── KEYFRAMES ─── */
+@keyframes x1-pulsate-pick {
+  0%   { opacity: 0.5; }
+  50%  { opacity: 0.15; }
+  100% { opacity: 0.5; }
+}
+
+@keyframes x1-blue-pick-glow {
+  0%, 100% { box-shadow: inset 0 0 30px rgba(0, 151, 196, 0.2), 0 0 50px rgba(0, 151, 196, 0.12); }
+  50%       { box-shadow: inset 0 0 55px rgba(0, 151, 196, 0.35), 0 0 90px rgba(0, 200, 255, 0.2); }
+}
+
+@keyframes x1-red-pick-glow {
+  0%, 100% { box-shadow: inset 0 0 30px rgba(222, 40, 70, 0.2), 0 0 50px rgba(222, 40, 70, 0.12); }
+  50%       { box-shadow: inset 0 0 55px rgba(222, 40, 70, 0.35), 0 0 90px rgba(255, 60, 90, 0.2); }
+}
+
+@keyframes x1-shimmer {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes x1-pick-shine {
+  0%, 100% { left: -100%; }
+  50%       { left: 200%; }
+}

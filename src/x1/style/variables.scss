@@ -1,0 +1,38 @@
+:root {
+  /* Panel dimensions */
+  --panel-width: 400px;
+  --panel-height: 880px;
+  --center-width: 440px;
+
+  /* Pick (single, large) */
+  --box-pick-height: 620px;
+  --pick-name-height: 48px;
+  --pick-image-crop: 0px;
+
+  /* Bans (3 per team, smaller) */
+  --box-ban-height: 65px;
+  --box-ban-spacer: 0px;
+  --ban-image-crop: 0px;
+
+  /* Team bar */
+  --team-bar-height: 64px;
+  --box-team-top: 0px;
+
+  /* Spells */
+  --summoner-spell-size: 70px;
+
+  /* Colors */
+  --color-red: rgb(222, 40, 70);
+  --color-blue: rgb(0, 151, 196);
+
+  /* Glow */
+  --glow-blue: rgba(0, 151, 196, 0.6);
+  --glow-blue-strong: rgba(0, 180, 220, 0.9);
+  --glow-red: rgba(222, 40, 70, 0.6);
+  --glow-red-strong: rgba(255, 50, 80, 0.9);
+
+  /* Glass */
+  --glass-bg: rgba(6, 9, 20, 0.82);
+  --glass-border: rgba(255, 255, 255, 0.07);
+  --border-width: 3px;
+}

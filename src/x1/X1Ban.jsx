@@ -1,9 +1,8 @@
 import React from 'react';
 import cx from 'classnames';
-
 import css from './style/index.module.scss';
 
-const Bans = props => (
+const X1Ban = props => (
     <div className={cx(css.Ban)}>
         <div className={cx(css.BanImage, {
             [css.Active]: props.isActive
@@ -13,4 +12,4 @@ const Bans = props => (
     </div>
 );
 
-export default Bans;
+export default X1Ban;

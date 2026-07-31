@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import Overlay from "./europe/Overlay";
+import X1Overlay from "./x1/X1Overlay";
 import convertState from './convertState';
+import convertStateX1, { isX1State } from './convertStateX1';
 import Error from './Error';
 import teams from './teams';
 import useSound from 'use-sound';
@@ -9,6 +11,7 @@ import mybansound from './assets/ban.mp3'
 
 function App() {
     const [globalState, setGlobalState] = useState({});
+    const [layoutMode, setLayoutMode] = useState('europe'); // 'europe' | 'x1'
     const [playPick] = useSound(mypicksound,{
         interrupt:true,
         volume:1,
@@ -42,8 +45,14 @@ function App() {
         }
     });
     const [error, setError] = useState('');
+
     useEffect(() => {
         Window.PB.on('newState', state => {
+            // Auto-detect x1: if each team has at most 1 real pick (displayName set)
+            if (isX1State(state.state)) {
+                setLayoutMode('x1');
+            }
+
             setGlobalState(state.state);
             let playersRed = state.state.redTeam.picks.map((player)=>player.displayName?.toLowerCase()?.trim())
             let playersBlue = state.state.blueTeam.picks.map((player)=>player.displayName?.toLowerCase()?.trim())
@@ -81,6 +90,7 @@ function App() {
             backend: Window.PB.getQueryVariable('backend'),
             error: error,
             config: config,
+            layoutMode: layoutMode,
             state: { ...globalState, config: undefined, blueTeam: JSON.stringify(globalState.blueTeam), redTeam: JSON.stringify(globalState.redTeam) }
         }
         return <Error message={`status: ${JSON.stringify(status, undefined, 4)}`} isStatus />
@@ -89,7 +99,23 @@ function App() {
     if (error) {
         return <Error message={error} />
     }
+
     if (config) {
+        // x1 layout: auto-detected when only 1 pick per team
+        if (layoutMode === 'x1') {
+            return (
+                <div className="App">
+                    <X1Overlay
+                        state={convertStateX1(globalState, Window.PB.backend)}
+                        config={config}
+                        playPick={playPick}
+                        playBan={playBan}
+                    />
+                </div>
+            );
+        }
+
+        // Default: europe 5v5 layout
         return (
             <div className="App">
                 <Overlay state={convertState(globalState, Window.PB.backend)} config={config} playPick={playPick} playBan={playBan}/>

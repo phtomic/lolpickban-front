@@ -1,8 +1,10 @@
+/* ─── BANS CONTAINER ─── */
 .Bans {
   width: 100%;
   height: var(--box-ban-height);
   display: flex;
   box-sizing: border-box;
+  align-items: center;
 
   .Ban {
     display: block;
@@ -11,66 +13,60 @@
     overflow: hidden;
     position: relative;
     transition: transform 0.3s ease, filter 0.3s ease;
-
-    &:first-child {
-      border: none;
-    }
+    flex-shrink: 0;
 
     img {
-      width: calc(100% + calc(2 * var(--ban-image-crop)));
+      width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: calc(-1 * var(--ban-image-crop)) calc(-1 * var(--ban-image-crop) + 1px);
       filter: grayscale(0%) brightness(1);
-      transition: filter 1.2s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s ease;
+      transition: filter 1.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* Banned champion desaturation */
+    /* Banned — desaturate */
     &:not(:has(.BanImage.Active)) img {
-      filter: grayscale(100%) brightness(0.42) contrast(1.15);
+      filter: grayscale(100%) brightness(0.4) contrast(1.15);
     }
 
-    /* Red diagonal cross on banned champion */
+    /* Red X cross on confirmed ban */
     &:not(:has(.BanImage.Active))::after {
       content: "";
       position: absolute;
       inset: 0;
-      background: 
-        linear-gradient(45deg, transparent 38%, rgba(255, 20, 20, 0.6) 44%, rgba(255, 20, 20, 0.6) 56%, transparent 62%),
-        linear-gradient(-45deg, transparent 38%, rgba(255, 20, 20, 0.6) 44%, rgba(255, 20, 20, 0.6) 56%, transparent 62%);
+      background:
+        linear-gradient(45deg,  transparent 37%, rgba(255, 20, 20, 0.65) 43%, rgba(255, 20, 20, 0.65) 57%, transparent 63%),
+        linear-gradient(-45deg, transparent 37%, rgba(255, 20, 20, 0.65) 43%, rgba(255, 20, 20, 0.65) 57%, transparent 63%);
       pointer-events: none;
       z-index: 2;
     }
 
+    /* Active ban — pulsate */
     .BanImage.Active {
       &::before {
         content: "";
         position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+        inset: 0;
         opacity: 0.5;
-        animation: pulsate-ban 1.5s infinite;
+        animation: x1-pulsate-ban 1.5s infinite;
       }
 
-      /* Active ban glowing border */
       &::after {
         content: "";
         position: absolute;
         inset: 0;
-        border: 2px solid rgba(255, 255, 255, 0.3);
-        animation: ban-border-glow 1.5s infinite;
+        border: 2px solid rgba(255, 255, 255, 0.35);
+        animation: x1-ban-border-glow 1.5s infinite;
         pointer-events: none;
       }
     }
   }
 
   .Spacing {
-    width: var(--box-ban-spacer);
+    flex: 1;
   }
 }
 
+/* Blue bans reversed to read right→left near the panel edge */
 &.TeamBlue .BansBox {
   flex-direction: row-reverse;
 }
@@ -81,21 +77,24 @@
 
 .BansBox {
   display: flex;
+  gap: 3px;
+  padding: 0 4px;
 }
 
-@keyframes pulsate-ban {
-  0% { opacity: 1; }
-  50% { opacity: 0.25; }
+/* ─── KEYFRAMES ─── */
+@keyframes x1-pulsate-ban {
+  0%   { opacity: 1; }
+  50%  { opacity: 0.2; }
   100% { opacity: 1; }
 }
 
-@keyframes ban-border-glow {
-  0%, 100% { 
+@keyframes x1-ban-border-glow {
+  0%, 100% {
     border-color: rgba(255, 255, 255, 0.3);
     box-shadow: inset 0 0 8px rgba(255, 255, 255, 0.1);
   }
-  50% { 
-    border-color: rgba(255, 255, 255, 0.6);
-    box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.2);
+  50% {
+    border-color: rgba(255, 255, 255, 0.65);
+    box-shadow: inset 0 0 18px rgba(255, 255, 255, 0.22);
   }
 }

@@ -1,0 +1,179 @@
+/* ─── SIDE PANEL (team) ─── */
+.TeamPanel {
+  width: var(--panel-width);
+  position: absolute;
+  top: var(--box-team-top);
+
+  /* Team name bar */
+  .TeamBar {
+    height: var(--team-bar-height);
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+    background: var(--glass-bg);
+    border-bottom: 1px solid var(--glass-border);
+    backdrop-filter: blur(14px);
+    position: relative;
+    z-index: 10;
+    overflow: hidden;
+
+    /* Decorative top line */
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 2px;
+      z-index: 20;
+    }
+
+    .TeamName {
+      font-size: 28px;
+      color: white;
+      font-family: 'Saira Condensed', sans-serif;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      text-shadow: 0 0 18px rgba(255, 255, 255, 0.18), 0 1px 3px rgba(0, 0, 0, 0.9);
+      flex: 1;
+    }
+
+    .TeamScore {
+      font-size: 44px;
+      font-family: 'Orbitron', 'Saira Condensed', sans-serif;
+      font-weight: 900;
+      color: white;
+      line-height: var(--team-bar-height);
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.4), 0 2px 4px rgba(0, 0, 0, 0.9);
+    }
+  }
+
+  /* Bans row */
+  .BansWrapper {
+    overflow: hidden;
+  }
+
+  @import "./picks";
+  @import "./bans";
+
+  /* ─── BLUE PANEL ─── */
+  &.TeamBlue {
+    left: calc(50% - var(--center-width) / 2 - var(--panel-width));
+
+    .TeamBar {
+      background: linear-gradient(90deg, rgba(0, 80, 120, 0.92) 0%, rgba(0, 120, 170, 0.82) 100%);
+      border: solid rgba(0, 180, 220, 0.35) var(--border-width);
+      box-shadow:
+        0 4px 25px rgba(0, 151, 196, 0.28),
+        inset 0 0 18px rgba(0, 151, 196, 0.18);
+
+      &::before {
+        background: linear-gradient(90deg, rgba(0, 200, 255, 0.9), rgba(0, 151, 196, 0.4), transparent);
+        box-shadow: 0 0 12px rgba(0, 200, 255, 0.4);
+      }
+
+      .TeamName {
+        text-align: left;
+        text-shadow:
+          0 0 22px rgba(0, 151, 196, 0.6),
+          0 0 45px rgba(0, 151, 196, 0.2),
+          0 1px 3px rgba(0, 0, 0, 0.9);
+      }
+
+      .TeamScore {
+        text-shadow:
+          0 0 22px rgba(0, 151, 196, 0.7),
+          0 0 45px rgba(0, 151, 196, 0.3),
+          0 2px 4px rgba(0, 0, 0, 0.9);
+        border-left: 2px solid rgba(0, 200, 255, 0.25);
+        padding-left: 10px;
+      }
+    }
+
+    .Bans {
+      background: linear-gradient(90deg, rgba(0, 100, 145, 0.88) 0%, rgba(0, 140, 190, 0.75) 100%);
+      border: solid rgba(0, 180, 220, 0.3) var(--border-width);
+      border-top: none;
+      box-shadow:
+        0 4px 20px rgba(0, 151, 196, 0.2),
+        inset 0 0 12px rgba(0, 151, 196, 0.12);
+      justify-content: flex-end;
+
+      .Ban {
+        border-left: solid rgba(0, 200, 255, 0.22) var(--border-width);
+
+        .BanImage.Active::before {
+          background-image: linear-gradient(to left, var(--color-blue) 0%, rgba(0, 0, 0, 0) 50%, var(--color-blue) 100%);
+        }
+      }
+    }
+
+    &.IsActive {
+      animation: x1-panel-blue-glow 2s ease-in-out infinite;
+
+      .TeamBar::before {
+        box-shadow: 0 0 20px rgba(0, 200, 255, 0.7);
+      }
+    }
+  }
+
+  /* ─── RED PANEL ─── */
+  &.TeamRed {
+    left: calc(50% + var(--center-width) / 2);
+
+    .TeamBar {
+      background: linear-gradient(90deg, rgba(180, 30, 55, 0.82) 0%, rgba(140, 20, 40, 0.92) 100%);
+      border: solid rgba(255, 60, 90, 0.35) var(--border-width);
+      box-shadow:
+        0 4px 25px rgba(222, 40, 70, 0.28),
+        inset 0 0 18px rgba(222, 40, 70, 0.18);
+
+      &::before {
+        background: linear-gradient(270deg, rgba(255, 60, 90, 0.9), rgba(222, 40, 70, 0.4), transparent);
+        box-shadow: 0 0 12px rgba(255, 60, 90, 0.4);
+      }
+
+      .TeamName {
+        text-align: right;
+        text-shadow:
+          0 0 22px rgba(222, 40, 70, 0.6),
+          0 0 45px rgba(222, 40, 70, 0.2),
+          0 1px 3px rgba(0, 0, 0, 0.9);
+      }
+
+      .TeamScore {
+        text-shadow:
+          0 0 22px rgba(222, 40, 70, 0.7),
+          0 0 45px rgba(222, 40, 70, 0.3),
+          0 2px 4px rgba(0, 0, 0, 0.9);
+        border-right: 2px solid rgba(255, 60, 90, 0.25);
+        padding-right: 10px;
+        order: -1;
+      }
+    }
+
+    .Bans {
+      background: linear-gradient(90deg, rgba(222, 40, 70, 0.75) 0%, rgba(165, 28, 52, 0.88) 100%);
+      border: solid rgba(255, 60, 90, 0.3) var(--border-width);
+      border-top: none;
+      box-shadow:
+        0 4px 20px rgba(222, 40, 70, 0.2),
+        inset 0 0 12px rgba(222, 40, 70, 0.12);
+
+      .Ban {
+        border-right: solid rgba(255, 60, 90, 0.22) var(--border-width);
+
+        .BanImage.Active::before {
+          background-image: linear-gradient(to left, var(--color-red) 0%, rgba(0, 0, 0, 0) 50%, var(--color-red) 100%);
+        }
+      }
+    }
+
+    &.IsActive {
+      animation: x1-panel-red-glow 2s ease-in-out infinite;
+
+      .TeamBar::before {
+        box-shadow: 0 0 20px rgba(255, 60, 90, 0.7);
+      }
+    }
+  }
+}

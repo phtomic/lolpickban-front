@@ -1,0 +1,30 @@
+@import "./fonts";
+
+body {
+  font-family: 'Saira Condensed', sans-serif;
+  background-size: cover;
+  overflow: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@import "./variables";
+@import "./animation";
+
+.X1 {
+  .CenterBox {
+    position: absolute;
+    color: white;
+    width: var(--center-width);
+    margin-top: var(--box-team-top);
+    left: 50%;
+    transform: translateX(-50%);
+    overflow: hidden;
+    z-index: 20;
+  }
+
+  @import "./timer";
+  @import "./team";
+}
